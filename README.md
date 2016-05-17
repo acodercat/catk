@@ -3,7 +3,7 @@
 A Restfull framework based on KOA using MVC conventions,Reference to the design idea of rails framework
 # githup #
 
-    https://github.com/WillCodeCat/catk.git
+    https://github.com/acodercat/catk
 
 
 ## Install ##
