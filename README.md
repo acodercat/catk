@@ -3,9 +3,7 @@
 A Restfull framework based on KOA using MVC conventions,Reference to the design idea of rails framework
 # github #
 
-    https://github.com/acodercat/catk
-
-
+    https://github.com/acodercat/catk.git
 ## Install ##
 
     npm install catk -g
@@ -28,12 +26,38 @@ A Restfull framework based on KOA using MVC conventions,Reference to the design 
     in "./config/routes.js"
     1.'MODELS PATH': 'ControllerName.Action',//'post /auth/login': 'AuthController.login',
     2.'MODELS PATH': 'Path/ControllerName.Action',//'post /auth/login': 'User/AuthController.login',
+    3.'MODELS PATH': function,//'post /auth/login': function *(next){
+        yield next;
+	},
 ## config ##
 
     in "./config"
     config.[file_name].[key]//config.auth.key
     You can new a config file
-## model ##
+## upload file ##
+
+    example:
+    
+    const parse = require('co-busboy');
+    const moment = require('moment');
+    
+    upload: function *(next){
+		let parts = parse(this);
+		let part;
+		while (part = yield parts) {
+			if (part.length) {
+				console.log('key: ' + part[0]);
+		      	console.log('value: ' + part[1]);
+		     } else if(part.filename != ''){
+		     	let ext = path.extname(part.filename);
+		      	let stream = fs.createWriteStream(path.join('./assets/images', (Math.ceil(Math.random()*9999)).toString()+moment().unix()+ext));
+			    part.pipe(stream);
+			    console.log('uploading %s -> %s', part.filename, stream.path);
+		    }
+	 	}
+
+	},
+## models ##
     
     ORM Sequelize http://static.html-js.com/sequelizejs/index.html
     in "./app/Modles"
@@ -45,10 +69,9 @@ A Restfull framework based on KOA using MVC conventions,Reference to the design 
     define function like this:
     is_login:function(){
         
-		
+		coding.....
 	}
-    You can invoke this function from anywhere in the code.
-    
+    You can invoke this function from anywhere in the code.like this is_login();
 ## about me ##
     
     name:CoderCat

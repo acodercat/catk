@@ -4,6 +4,7 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 var path = require('path');
 var colors = require('colors');  
+var version = require('../package.json')['version'];
 
 function loadFile(name) {
   return fs.readFileSync(path.join(__dirname, '../', 'main',name), 'utf-8');
@@ -98,15 +99,16 @@ module.exports = function(sequelize, DataTypes) {
   return user;
 
 }`
-  config.globals = loadFile('config/globals.js');
+  config.local = loadFile('config/local.js');
   config.models = loadFile('config/models.js');
   config.auth = loadFile('config/auth.js');
   config.routes = loadFile('config/routes.js');
-  lib.core = loadFile('lib/core.js');
+  lib.catk = loadFile('lib/catk.js');
   lib.func = loadFile('lib/function.js');
   var app = loadFile('app.js');
 	var package = `{
   "name": "${project_name}",
+  "_catkVersion":"${version}",
   "version": "0.0.0",
   "description": "",
   "main": "app.js",
@@ -115,6 +117,7 @@ module.exports = function(sequelize, DataTypes) {
   },
   "license": "ISC",
   "dependencies": {
+    "co-busboy": "^1.3.1",
     "colors": "^1.1.2",
     "jwt-simple": "^0.5.0",
     "koa": "^1.2.0",
@@ -139,7 +142,7 @@ module.exports = function(sequelize, DataTypes) {
     }); 
     
     mkdir(project_name+'/config',function(){
-      write(project_name+'/config/globals.js', config.globals);
+      write(project_name+'/config/local.js', config.local);
       write(project_name+'/config/models.js', config.models);
       write(project_name+'/config/routes.js', config.routes);
       write(project_name+'/config/auth.js', config.auth);
@@ -148,7 +151,7 @@ module.exports = function(sequelize, DataTypes) {
       mkdir(project_name+'/assets/images');
     });
     mkdir(project_name+'/lib',function(){
-      write(project_name+'/lib/core.js', lib.core);
+      write(project_name+'/lib/catk.js', lib.catk);
       write(project_name+'/lib/function.js', lib.func);
       write(project_name+'/app.js', app);
       write(project_name+'/package.json', package);
@@ -156,7 +159,6 @@ module.exports = function(sequelize, DataTypes) {
       
       mkdir(project_name+'/app/models',function(){
           mkdir(project_name+'/app/Logs',function(){
-
             console.log();
             console.log("   success!".green);
             console.log();
@@ -165,8 +167,6 @@ module.exports = function(sequelize, DataTypes) {
             console.log();
             console.log('   run the app:');
             console.log('    npm start'.cyan);
-            
-
           });
         
       });
@@ -179,7 +179,7 @@ module.exports = function(sequelize, DataTypes) {
 var agrv = process.argv;
 var now_date = new Date();
 if(agrv[2] === '-v'){
-  console.log('catk1.0.5');
+  console.log(version);
 }else if(agrv[2] === 'new'){//create project
   if(agrv[3] === undefined) {
     console.log('error: '.red+'no project name!');

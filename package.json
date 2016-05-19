@@ -1,6 +1,6 @@
 {
   "name": "catk",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A Restfull framework based on KOA using MVC conventions,Reference to the design idea of rails framework",
   "main": "app.js",
   "scripts": {
@@ -17,7 +17,7 @@
   ],
   "repository": { 
    "type" : "git",
-   "url" : "https://github.com/acodercat/catk"
+   "url" : "https://github.com/WillCodeCat/catk.git"
   },
   "author": "codercat",
   "bin": { "catk":"./bin/catk" },

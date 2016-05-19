@@ -2,9 +2,9 @@
 const koa = require('koa');
 const app = koa();
 const jwt = require('jwt-simple');
-const core = require('./lib/core.js');
-const port = core(app,'app');//app是程序目录目录名，返回端口号
+const catk = require('./lib/catk.js');
+catk(app,'app');//app是程序目录目录名
 
 
 
-app.listen(port);
+app.listen(config.local.port);
